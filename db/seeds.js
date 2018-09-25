@@ -17,6 +17,7 @@ const mongoose = require('mongoose')
 //     console.error(`MongoDB connection error!!! ${error}`)
 //     process.exit(-1)
 // })
+mongoose.connect(process.env.MONGODB_URI)
 
 const User = require("../models/user");
 const Idea = require("../models/idea");
