@@ -32,7 +32,7 @@ const tesla = new Idea({
     "Gas is too expensive. I'm gonna build a car that doesn't need gas"
 });
 const elon = new User({
-  userName: "elon_musk",
+  name: "elon_musk",
   password: "spaceiscool",
   ideas: [mars, tesla]
 });
