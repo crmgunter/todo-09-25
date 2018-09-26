@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const app = express();
 const UsersController = require('./controllers/users')
+const IdeaController = require('./controllers/ideas')
 mongoose.Promise = global.Promise
 
 mongoose.connect(process.env.MONGODB_URI); //mongodb://localhost/idea-board
@@ -35,6 +36,7 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/client/build/index.html");
 });
 app.use('/api/users', UsersController)
+app.use('/api/users/:userId/ideas', IdeaController)
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

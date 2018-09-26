@@ -32,9 +32,7 @@ class LogIn extends Component {
 
   handleChange = (e) => {
     const user = {...this.state.user}
-    console.log(this.state)
     user[e.target.name] = e.target.value
-    console.log(user)
     this.setState({ user })
   }
 
