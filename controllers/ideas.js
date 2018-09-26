@@ -25,4 +25,16 @@ router.post('/', (req, res) => {
     })
 })
 
+router.delete('/:id', (req, res) => {
+    const userId = req.params.userId
+    const ideaId = req.params.id
+    User.findById(userId).then((user) => {
+        user.ideas.id(ideaId).remove()
+        user.save()
+        res.redirect(`/api/users/${userId}/ideas`)
+    }).catch((err) => {
+        console.log(err)
+    })
+})
+
 module.exports = router

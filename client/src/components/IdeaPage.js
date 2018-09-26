@@ -15,21 +15,18 @@ class IdeaPage extends Component {
     }
   };
 
-  componentDidMount() {
+  componentWillMount() {
     this.getIdeas();
   }
 
   getIdeas = () => {
     const userId = this.props.match.params.userId;
-    console.log(userId);
     axios.get(`/api/users/${userId}`).then(res => {
       const user = {
         _id: res.data._id,
         name: res.data.name
       };
-      console.log(user);
       const ideas = res.data.ideas;
-      console.log(ideas);
       this.setState({ user, ideas });
     });
   };
@@ -49,13 +46,22 @@ class IdeaPage extends Component {
   handleChange = (e) => {
     const idea = {...this.state.idea}
     idea[e.target.name] = e.target.value
-    console.log(idea)
     this.setState({ idea })
   }
 
   handleSubmit = (e) => {
       e.preventDefault()
       this.createIdea()
+      this.getIdeas()
+  }
+
+  deleteIdea = (index) => {
+      const ideaId = this.state.ideas[index]._id
+      axios.delete(`/api/users/${this.state.user._id}/ideas/${ideaId}`).then(res => {
+          {}
+      }).catch(err => {
+          console.log(err)
+      })
       this.getIdeas()
   }
 
@@ -89,9 +95,10 @@ class IdeaPage extends Component {
             </div>
             <button onClick={this.handleSubmit}>New Idea</button>
           </form>
-          {this.state.ideas.map(idea => {
+          {this.state.ideas.map((idea, i) => {
             return (
               <div>
+                  <button onClick={() => this.deleteIdea(i)}>X</button>
                 <h3>{idea.title}</h3>
                 <p>{idea.description}</p>
               </div>
